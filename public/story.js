@@ -89,11 +89,11 @@ class storyclass {
             audio_.play();
 
 
-            for ( var i = 0; i < document.getElementsByClassName("menu-item").length ; i++) {               // loop through all menu items and unmark all others and toggle the clicked one (highlighted-not highlighted)
-                if ( document.getElementsByClassName("menu-item").item(i).id == btn_)                       // if clicked eleme
-                    document.getElementsByClassName("menu-item").item(i).classList.toggle("menu-high");
+            for ( var i = 0; i < document.getElementsByClassName("menu_item").length ; i++) {               // loop through all menu items and unmark all others and toggle the clicked one (highlighted-not highlighted)
+                if ( document.getElementsByClassName("menu_item").item(i).id == btn_)                       // if clicked eleme
+                    document.getElementsByClassName("menu_item").item(i).classList.toggle("menu-high");
                 else
-                    document.getElementsByClassName("menu-item").item(i).classList.remove("menu-high");
+                    document.getElementsByClassName("menu_item").item(i).classList.remove("menu-high");
             }
         }
 

@@ -16,6 +16,11 @@ img {
     background-size: cover;
   }
 
+.gameTitle {
+    font-family: 'Comic Sans MS';
+    font-size: 20vh;    
+    color: aliceblue;
+  }
 .overlay {
     position: absolute;
     text-align: center;
@@ -29,7 +34,7 @@ img {
     opacity: 80%;
     z-index: 9998;
     text-shadow:    0 0 3px blue, 0 0 5px yellowgreen, 0 0 7px blue, 0 0 8px yellow,
-                    0 0 4px blue, 0 0 6px yellowgreen, 0 0 8px blue, 0 0 9px yellow;
+    0 0 4px blue, 0 0 6px yellowgreen, 0 0 8px blue, 0 0 9px yellow;
 }
 
 .overlay_txt_active {
@@ -123,7 +128,7 @@ img {
     
 }
 
-.menu-item {
+.menu_item {
     text-shadow:
     0 0 2px maroon,
     0 0 3px maroon,
@@ -135,11 +140,11 @@ img {
     0 0 10px maroon;
 }
 
-.menu-item:hover {
+.menu_item:hover {
     cursor: pointer;
 }
 
-.menu-item:not(.menu-high):hover {      /* dark red shadow if hover, but only if not selected(highlighted) */
+.menu_item:not(.menu-high):hover {      /* dark red shadow if hover, but only if not selected(highlighted) */
     animation: fadeInMenu .3s ease-out;
     animation-fill-mode: forwards;  
 }
