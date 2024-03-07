@@ -1,12 +1,16 @@
-body, html {
+/*           ***                                                base                                            ***           */
+body,
+html {
     height: 100%;
     width: 100%;
-    position:relative;
+    position: relative;
     user-select: none;
-    overflow: hidden; /* Hide scrollbars */
-    padding: 0; /* no rims (remove default top rim)*/
+    overflow: hidden;
+    /* Hide scrollbars */
+    padding: 0;
+    /* no rims (remove default top rim)*/
     margin: 0;
-  }
+}
 
 img {
     height: 100%;
@@ -14,13 +18,28 @@ img {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-  }
+}
 
-.gameTitle {
-    font-family: 'Comic Sans MS';
-    font-size: 20vh;    
-    color: aliceblue;
-  }
+.game-title {
+    /* font-family: 'Comic Sans MS'; 
+    */
+    display: inline-block;
+    font-size: 20vh;
+    color: rgb(209, 192, 109);
+    margin-top: 3vh;
+    padding-left: 30vh;
+    padding-right: 30vh;
+    padding-top: 20vh;
+    padding-bottom: 20vh;
+
+    /*
+    border-style: solid;
+    border-image: url('./res/frame.png');    ...zeigt irgendwie nix an. in einem nackten html gehts aber*/
+    background-size: 100% 100%;
+    background-image: url('./res/frame2.png');
+}
+
+/* overlay over all, e.g. for "game starts..."  */
 .overlay {
     position: absolute;
     text-align: center;
@@ -29,14 +48,15 @@ img {
     left: 0%;
     width: 100%;
     height: 100%;
-    font-size: 10vh;    
-    background-color: rgba(0,0,0);
+    font-size: 10vh;
+    background-color: rgba(0, 0, 0);
     opacity: 80%;
     z-index: 9998;
-    text-shadow:    0 0 3px blue, 0 0 5px yellowgreen, 0 0 7px blue, 0 0 8px yellow,
-    0 0 4px blue, 0 0 6px yellowgreen, 0 0 8px blue, 0 0 9px yellow;
+    text-shadow: 0 0 3px blue, 0 0 5px yellowgreen, 0 0 7px blue, 0 0 8px yellow,
+        0 0 4px blue, 0 0 6px yellowgreen, 0 0 8px blue, 0 0 9px yellow;
 }
 
+/* overlay over all if text is displayd. Hides mouse courser, takes only clicks for next text  */
 .overlay_txt_active {
     position: absolute;
     top: 0%;
@@ -44,28 +64,30 @@ img {
     width: 100%;
     height: 100%;
     z-index: 9999;
+    cursor: none;
 }
 
+/* div text field to display text  */
 .txt {
     cursor: pointer;
-    position:absolute;
+    position: absolute;
     /*pointer-events: none;   damit man durchklicken kann auf das darunter */
     animation: fadeInFromNone 2s ease-in;
     width: 25%;
     /*height: 80%;*/
     right: 5%;
     top: 5%;
-    font-size: 5.5vh;    
+    font-size: 5.5vh;
     word-wrap: break-word;
     overflow-y: auto;
     color: red;
-    
-    text-shadow: 
-    rgb(15, 15, 15) -1px -1px 1px,
-    rgb(15, 15, 15)  1px -1px 1px,
-    rgb(15, 15, 15) -1px  1px 1px,
-    rgb(15, 15, 15)  1px  1px 1px;
-    
+
+    text-shadow:
+        rgb(15, 15, 15) -1px -1px 1px,
+        rgb(15, 15, 15) 1px -1px 1px,
+        rgb(15, 15, 15) -1px 1px 1px,
+        rgb(15, 15, 15) 1px 1px 1px;
+
 }
 
 @keyframes fadeInFromNone {
@@ -73,6 +95,7 @@ img {
         display: none;
         opacity: 0;
     }
+
     100% {
         display: block;
         opacity: 1;
@@ -80,13 +103,17 @@ img {
 }
 
 
+
+
+
+/*           ***                                                inventory                                            ***           */
 .inventory {
     cursor: pointer;
     color: red;
     position: absolute;
     left: 3%;
     top: 1%;
-    font-size: 3vh;    
+    font-size: 3vh;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
@@ -95,63 +122,45 @@ img {
 .ani {
     animation-duration: 2s;
     animation-name: slidein;
-}    
+}
+
 @keyframes slidein {
     from {
         margin-left: 100%;
         width: 300%;
     }
-    
+
     75% {
         font-size: 300%;
         margin-left: 25%;
         width: 150%;
     }
-    
+
     to {
         margin-left: 0%;
         width: 100%;
     }
 }
-      
 
+
+
+
+/*           ***                                                menu                                            ***           */
 .menu {
-    position:absolute;
+    position: absolute;
     width: 100%;
     bottom: 5%;
     color: goldenrod;
     /*right:50%;  Positions 50% from right (right edge will be at center) */
     /*margin-right:200px;  Positions 200px to the left of center     */
-    font-size: 4vh;    
-    display: flex;    
-    justify-content: space-evenly; 
-    
+    font-size: 6vh;
+    display: flex;
+    justify-content: space-evenly;
+
 }
 
 .menu_item {
     text-shadow:
-    0 0 2px maroon,
-    0 0 3px maroon,
-    0 0 4px maroon,
-    0 0 5px maroon,
-    0 0 6px maroon,
-    0 0 7px maroon,
-    0 0 8px maroon,
-    0 0 10px maroon;
-}
-
-.menu_item:hover {
-    cursor: pointer;
-}
-
-.menu_item:not(.menu-high):hover {      /* dark red shadow if hover, but only if not selected(highlighted) */
-    animation: fadeInMenu .3s ease-out;
-    animation-fill-mode: forwards;  
-}
-
-@keyframes fadeInMenu {                 /* fade-in a reddish shadow, if menu item is hovered (but not marked(=clicked) yet) */
-    0% {
-        text-shadow:
         0 0 2px maroon,
         0 0 3px maroon,
         0 0 4px maroon,
@@ -160,76 +169,47 @@ img {
         0 0 7px maroon,
         0 0 8px maroon,
         0 0 10px maroon;
-    }
-    100% {
-        text-shadow:
-        0 0 7px maroon,
-        0 0 10px maroon,
-        0 0 12px maroon,
-        0 0 14px maroon,
-        0 0 16px maroon,
-        0 0 17px maroon,
-        0 0 18px maroon,
-        0 0 20px maroon;
-    }
 }
 
-.menu-high {                            /* light-red shadow (neon) if highlighted */
-    text-shadow:
-    0 0 7px red,
-    0 0 10px red,
-    0 0 12px red,
-    0 0 14px red,
-    0 0 16px red,
-    0 0 17px red,
-    0 0 18px red,
-    0 0 20px red;
-}
-
-.obj {
-        color: red;
-        text-shadow: 
-        rgb(15, 15, 15) -1px -1px 1px,
-        rgb(15, 15, 15)  1px -1px 1px,
-        rgb(15, 15, 15) -1px  1px 1px,
-        rgb(15, 15, 15)  1px  1px 1px;
-        /* border-style: dashed; */
-}
-
-.obj:hover { 
+.menu_item:hover {
     cursor: pointer;
 }
-.obj-tree{
-    position:absolute;
-    top: 5%;
-    left: 2%;
-    width: 16%;
-    height: 80%;
-}
-.obj-tree2{
-    position:absolute;
-    top: 8%;
-    right: 1%;
-    width: 17%;
-    height: 70%;
+
+.menu_item:not(.menu-high):hover {
+    /* dark red shadow if hover, but only if not selected(highlighted) */
+    animation: fadeInMenu .3s ease-out;
+    animation-fill-mode: forwards;
 }
 
-.obj-way{
-    position:absolute;
-    top: 65%;
-    left: 45%;
-    width: 15%;
-    height: 22%;
-    font-size: 16vh;
+@keyframes fadeInMenu {
+
+    /* fade-in a reddish shadow, if menu item is hovered (but not marked(=clicked) yet) */
+    0% {
+        text-shadow:
+            0 0 2px maroon, 0 0 3px maroon, 0 0 4px maroon, 0 0 5px maroon, 0 0 6px maroon, 0 0 7px maroon, 0 0 8px maroon, 0 0 10px maroon;
+    }
+
+    100% {
+        text-shadow:
+            0 0 7px maroon, 0 0 10px maroon, 0 0 12px maroon, 0 0 14px maroon, 0 0 16px maroon, 0 0 17px maroon, 0 0 18px maroon, 0 0 20px maroon;
+    }
 }
 
-.obj-river{
-    position:absolute;
-    top: 63%;
-    left: 40%;
-    width: 3%;
-    height: 42%;
-    transform: rotate(-70deg);
+.menu-high {
+    /* light-red shadow (neon) if highlighted */
+    text-shadow:
+        0 0 7px red, 0 0 10px red, 0 0 12px red, 0 0 14px red, 0 0 16px red, 0 0 17px red, 0 0 18px red, 0 0 20px red;
 }
 
 
+/*           ***                                                general clickable object in the virtual world                                         ***           */
+.obj {
+    color: red;
+    text-shadow:
+        rgb(15, 15, 15) -1px -1px 1px, rgb(15, 15, 15) 1px -1px 1px, rgb(15, 15, 15) -1px 1px 1px, rgb(15, 15, 15) 1px 1px 1px;
+    /* border-style: dashed; */
+}
+
+.obj:hover {
+    cursor: pointer;
+}

@@ -4,37 +4,53 @@
 let $ = (id) => document.getElementById(id);                    // $ as alias for getElementById, like in JQuery
 import { storyclass, objclass } from "./story.js";
 
-customElements.define( 'my-obj', objclass );                    // from here on, <my-obj> can be used in html to add new objects to the game
+customElements.define('my-obj', objclass);                    // from here on, <my-obj> can be used in html to add new objects to the game
 
 
 let story = new storyclass("txt");
 
+function cssLink() {
+    var cssId = 'level1';  // you could encode the css path itself to generate id..
+    if (!document.getElementById(cssId)) {
+        var head = document.getElementsByTagName('head')[0];
+        var link = document.createElement('link');
+        link.id = cssId;
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'level1.css';
+        link.media = 'all';
+        head.appendChild(link);
+    }
+}
 
 function game_start() {
-    
+
     $("overlay").hidden = true;
-    
+
     var bg_music = new Audio('res/water.mp3');
     bg_music.volume = 0.5;
     // bg_music.play();
-    
-    
-    story.start(); 
-    
+
+    story.start();
+
 }
 
 /*********** DOM ready    */
 window.addEventListener('load', function () {
-    
-    
+
+    cssLink();
+
+    var linkNode = document.querySelector('link[href*="level1.css"]');
+    document.getElementsByTagName('head')[0].removeChild(linkNode);
+
     /* overlay: first screen "start game..." to be clicked to start
     */
-   $("overlay").hidden = false;
-   $("overlay").addEventListener("click", function() { game_start() } );
-   
-   /* overlay_txt_active: invisible overlay box during text displeyed in text field*/
-   $("overlay_txt_active").hidden = true;
-   $("overlay_txt_active").addEventListener('click',  function() { story.txt_clicked() } );
+    $("overlay").hidden = false;
+    $("overlay").addEventListener("click", function () { game_start() });
+
+    /* overlay_txt_active: invisible overlay box during text displeyed in text field*/
+    $("overlay_txt_active").hidden = true;
+    $("overlay_txt_active").addEventListener('click', function () { story.txt_clicked() });
 })
 
 
