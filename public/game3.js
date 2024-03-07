@@ -39,9 +39,10 @@ function game_start() {
 window.addEventListener('load', function () {
 
     cssLink();
-
-    var linkNode = document.querySelector('link[href*="level1.css"]');
-    document.getElementsByTagName('head')[0].removeChild(linkNode);
+    
+    // remove css:
+    //var linkNode = document.querySelector('link[href*="level1.css"]');
+    //document.getElementsByTagName('head')[0].removeChild(linkNode);
 
     /* overlay: first screen "start game..." to be clicked to start
     */
