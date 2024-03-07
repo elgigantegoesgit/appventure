@@ -2,7 +2,9 @@
 // npx http-server -o    ...hostet /public folder
 
 let $ = (id) => document.getElementById(id);                    // $ as alias for getElementById, like in JQuery
+
 import { storyclass, objclass } from "./story.js";
+import { levelAddObjects } from "./level1.js";
 
 customElements.define('my-obj', objclass);                    // from here on, <my-obj> can be used in html to add new objects to the game
 
@@ -38,8 +40,10 @@ function game_start() {
 /*********** DOM ready    */
 window.addEventListener('load', function () {
 
+
     cssLink();
-    
+    levelAddObjects();
+
     // remove css:
     //var linkNode = document.querySelector('link[href*="level1.css"]');
     //document.getElementsByTagName('head')[0].removeChild(linkNode);

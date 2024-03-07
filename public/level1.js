@@ -1,4 +1,38 @@
 let $ = (id) => document.getElementById(id);                    // $ as alias for getElementById, like in JQuery
+
+// add Objects to the virtual world, replaces:
+// <my-obj id="way" class="obj obj-way"></my-obj>
+function levelAddObjects() {    
+    var newObj;
+
+    // left tree
+    newObj = document.createElement('my-obj');
+    newObj.id = "tree";
+    newObj.className = "obj obj-tree";
+    document.body.appendChild(newObj);
+
+    // right tree
+    newObj = document.createElement('my-obj');
+    newObj.id = "tree2";
+    newObj.className = "obj obj-tree2";
+    document.body.appendChild(newObj);
+
+    // way
+    newObj = document.createElement('my-obj');
+    newObj.id = "way";
+    newObj.className = "obj obj-way";
+    document.body.appendChild(newObj);
+
+    // river
+    newObj = document.createElement('my-obj');
+    newObj.id = "river";
+    newObj.className = "obj obj-river";
+    document.body.appendChild(newObj);
+    
+
+}
+
+
 function isMarked(btn_) {
     return ($(btn_).classList.contains("menu-high"));
 }
@@ -42,5 +76,5 @@ const level = {
         return arr_;
     }
 };
-export { level };
+export { level, levelAddObjects };
 
