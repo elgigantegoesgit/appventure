@@ -108,15 +108,20 @@ img {
 
 /*           ***                                                inventory                                            ***           */
 .inventory {
+    z-index: 9999;
     cursor: pointer;
+    border-style: dotted;
     color: red;
     position: absolute;
     left: 3%;
     top: 1%;
-    font-size: 3vh;
+    font-size: 5vh;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
-
+.inventory-item {
+    display:block; 
+    border-style: solid;
+}
 
 /*** *** ***  inventory item add - animation, is set by div.classList.add("ani");*/
 .ani {

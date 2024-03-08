@@ -5,7 +5,8 @@ let $ = (id) => document.getElementById(id);                    // $ as alias fo
 function levelAddObjects() {
     var newObj;
 
-    // left tree
+    /* left tree
+    */
     newObj = document.createElement('my-obj');
     newObj.id = "tree";
     newObj.className = "obj obj-tree";
@@ -68,9 +69,21 @@ const level = {
                     if (this.levelData.includes("treeviewed")) {
                         arr.push("Okay, bin dort.");
                         arr.push("Tatsächlich, dieser Ast ist schon fast ganz ohne Rinde aber scheint doch stark genung, um einges zu stützen.");
-                        arr.push("Ich zieh mal dran.../*effort");                        
+                        arr.push("Ich zieh mal dran.../*effort");      
+                        arr.push("Uhhh...");      arr.push("Ahhh...");      arr.push("Ihhh...");      
+                        arr.push("RATSCH!<br><br>...ja, tatsächlich, diesen stabilen Ast hab ich mal. Allerdings ist das ein ziemliches Gerät... Kaum zu tragen./*crack");                        
+                        arr.push("/+Grosser Ast");                        
                     } else {
                         arr.push("Also wirklich, nur so auf gut Glück krieche ich nicht los. Das muss ich mir voher ansehen.");
+                    }
+                }
+                break;
+            case 'river':
+                if (isMarked("btn_take")) {
+                    if (1) {
+                        arr.push("Okay, dann schnappe ich mir mal ne Ladung Wasser.../+Wasser");
+                        arr.push("/+Mehr Wasser...");                        
+                    } else {
                     }
                 }
                 break;

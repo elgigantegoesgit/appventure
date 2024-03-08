@@ -33,14 +33,24 @@ class storyclass {
         $(storyclass.txt_id).innerHTML = "";
         if (storyclass.txt.length > 0) storyclass.nxt("");       // if still text in queue, show next part...
     }
-
-
-
+    
+    
     /* text - show & flow function
-        in:     add    text to add (single string or array, works both)- if nothing is passed, show next array element
-        out:    displays first element of storyclass.txt[] to txt_id.innerHTML and removes it if it fits in one screen, or truncates it after last full word (no break in the middle of a word)
-                modifies text-queue array storyclass.txt[]*/
+    in:     add    text to add (single string or array, works both)- if nothing is passed, show next array element
+    out:    displays first element of storyclass.txt[] to txt_id.innerHTML and removes it if it fits in one screen, or truncates it after last full word (no break in the middle of a word)
+    modifies text-queue array storyclass.txt[]*/
     static nxt(add) {
+    
+        function inventory_add(item) {
+            /*
+            */
+            var div = document.createElement("my-obj");
+            div.id = item;
+            div.innerHTML = item;
+            div.classList.add("ani");
+            div.classList.add("inventory-item");
+            $("inventory").appendChild(div);
+        }
 
         if (add != "") {            
             storyclass.txt = storyclass.txt.concat(add);
@@ -51,6 +61,18 @@ class storyclass {
 
             if ($("overlay_txt_active").hidden) {                                   // now is text active - objs are not reactive for clicks
                 $("overlay_txt_active").hidden = false;
+
+                // if starts with '/+', add item to inventory
+                var itemPos = storyclass.txt[0].indexOf("/+");
+                if ( itemPos >= 0 ) {
+                    var item = storyclass.txt[0].slice(itemPos + 2);               // extract item from txt, all after /+
+                    storyclass.txt[0] = storyclass.txt[0].slice(0, itemPos);
+                    
+                    inventory_add(item);
+
+
+                }   
+
 
                 // if audio: check for special char "/*filename" in text, add .mp3 and play the audio, crop text to /*
                 var audioPos = storyclass.txt[0].indexOf("/*");
@@ -117,7 +139,7 @@ class storyclass {
             }
         }
 
-
+        log(obj_);
         switch (obj_) {
             case 'btn_view':                                                                                //menu buttons clicked
             case 'btn_take':
