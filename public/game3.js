@@ -1,20 +1,21 @@
 // to make ES6 Modules work (import/export), the page has to be served by a HTTP server (file:// is not working), e.g. npx (needes nodes.js installed):
 // npx http-server -o    ...hostet /public folder
 
-let $ = (id) => document.getElementById(id);                    // $ as alias for getElementById, like in JQuery
-
+import { $, log } from "./utils.js";
 import { storyclass, objclass } from "./story.js";
 import { levelAddObjects } from "./level1.js";
 
-customElements.define('my-obj', objclass);                    // from here on, <my-obj> can be used in html to add new objects to the game
+customElements.define('my-obj', objclass);                    // from here on, <my-obj> can be used in html and js to add new objects to the game in a global scope
+
+let story = new storyclass("txt");                              // passes the div id via constructor, to which text shall be rendered
 
 
-let story = new storyclass("txt");
 
 function cssLink() {
     var cssId = 'level1';  // you could encode the css path itself to generate id..
     if (!document.getElementById(cssId)) {
-        var head = document.getElementsByTagName('head')[0];
+        var head = document.head;
+        //var head = document.getElementsByTagName('head')[0];
         var link = document.createElement('link');
         link.id = cssId;
         link.rel = 'stylesheet';
