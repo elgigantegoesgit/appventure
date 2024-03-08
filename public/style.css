@@ -110,7 +110,6 @@ img {
 .inventory {
     z-index: 9999;
     cursor: pointer;
-    border-style: dotted;
     color: red;
     position: absolute;
     left: 3%;
@@ -120,7 +119,6 @@ img {
 }
 .inventory-item {
     display:block; 
-    border-style: solid;
 }
 
 /*** *** ***  inventory item add - animation, is set by div.classList.add("ani");*/
