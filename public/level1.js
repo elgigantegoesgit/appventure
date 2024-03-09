@@ -1,4 +1,4 @@
-let $ = (id) => document.getElementById(id);                    // $ as alias for getElementById, like in JQuery
+import { $, log } from "./utils.js";
 
 // add Objects to the virtual world, replaces:
 // <my-obj id="way" class="obj obj-way"></my-obj>
@@ -47,13 +47,17 @@ const level = {
 
     getNextText: function (obj_) {
         var arr = new Array();          //array with texts to add
-        switch (obj_) {
 
-            case 'way':
-                if (isMarked("btn_view")) {
-                    arr.push("Ein Pfad... führt erst zum Wasser und dann ins schier Endlose. So kommt's mir zumindest mit meinem schmerzenden Bein derzeit vor...");
-                }
-                break;
+        if (this.levelData.includes("useTwig")) {                                   // "Verwende Ast mit..." und dann nicht auf tree2 geklickt ->raus
+            if (obj_ != "tree2") {
+                log("raus");
+                $('Grosser Ast').innerHTML = 'Grosser Ast';
+                this.levelData.splice(this.levelData.indexOf("useTwig"), 1);        // remove "useTwig"
+                return;
+            }
+        }
+
+        switch (obj_) {
 
             case 'tree':
                 if (isMarked("btn_view")) {
@@ -69,26 +73,19 @@ const level = {
                     if (this.levelData.includes("treeviewed")) {
                         arr.push("Okay, bin dort.");
                         arr.push("Tatsächlich, dieser Ast ist schon fast ganz ohne Rinde aber scheint doch stark genung, um einges zu stützen.");
-                        arr.push("Ich zieh mal dran.../*effort");      
-                        arr.push("Uhhh...");      arr.push("Ahhh...");      arr.push("Ihhh...");      
-                        arr.push("RATSCH!<br><br>...ja, tatsächlich, diesen stabilen Ast hab ich mal. Allerdings ist das ein ziemliches Gerät... Kaum zu tragen./*crack");                        
-                        arr.push("/+Grosser Ast");                        
+                        arr.push("Ich zieh mal dran.../*effort");
+                        arr.push("Uhhh..."); arr.push("Ahhh..."); arr.push("Ihhh...");
+                        arr.push("RATSCH!<br><br>...ja, tatsächlich, diesen stabilen Ast hab ich mal. Allerdings ist das ein ziemliches Gerät... Kaum zu tragen./*crack");
+                        arr.push("/+Grosser Ast");
                     } else {
                         arr.push("Also wirklich, nur so auf gut Glück krieche ich nicht los. Das muss ich mir voher ansehen.");
                     }
                 }
                 break;
-            case 'river':
-                if (isMarked("btn_take")) {
-                    if (1) {
-                        arr.push("Okay, dann schnappe ich mir mal ne Ladung Wasser.../+Wasser");
-                        arr.push("/+Mehr Wasser...");                        
-                    } else {
-                    }
-                }
-                break;
+
 
             case 'tree2':
+
                 if (isMarked("btn_view")) {
                     if (!this.levelData.includes("treeViewedOnce")) {
                         this.levelData.push("treeViewedOnce");
@@ -104,7 +101,44 @@ const level = {
                         }
                     }
                 }
+
+                if (this.levelData.includes("useTwig")) {
+                        arr.push("RATSCH! Oh ja, das hat geklappt!/*crack");
+                        $('Grosser Ast').innerHTML = 'Handlicher Ast';
+                        this.levelData.splice(this.levelData.indexOf("useTwig"), 1);        // remove "useTwig"
+                }
+
                 break;
+
+            case 'Grosser Ast':
+                if (isMarked("btn_view")) {
+                    arr.push("Oh ja, ein schöner stabiler Ast mit Gabel dran. Nur etwas lang.");
+                }
+                if (isMarked("btn_use")) {
+                    $('Grosser Ast').innerHTML = "Verwende Ast mit...";
+                    //arr.push("Verwende Ast mit...");
+                    this.levelData.push("useTwig");
+                }
+
+                break;
+
+
+
+
+            case 'river':
+                if (isMarked("btn_take") || isMarked("btn_use")) {
+                    arr.push("So leicht gehts nicht. Mein Bein tut zu sehr weh, so komm ich nicht bis zum Wasser. Ich bräuchte eine Krücke oder sowas.");
+                }
+                break;
+
+
+            case 'way':
+                if (isMarked("btn_view")) {
+                    arr.push("Ein Pfad... führt erst zum Wasser und dann ins schier Endlose. So kommt's mir zumindest mit meinem schmerzenden Bein derzeit vor...");
+                    arr.push("Und so in dem Zustand ist garnicht daran zu denken. Ohne Hilfsmittel wird das nichts.")
+                }
+                break;
+
         }
         return arr;
     }

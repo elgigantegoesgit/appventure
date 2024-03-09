@@ -41,9 +41,9 @@ class storyclass {
     modifies text-queue array storyclass.txt[]*/
     static nxt(add) {
     
-        function inventory_add(item) {
-            /*
-            */
+        if ( add == undefined ) add = "";
+
+        function inventory_add(item) {                                              // if starts with '/+', add item to inventory
             var div = document.createElement("my-obj");
             div.id = item;
             div.innerHTML = item;
@@ -51,7 +51,7 @@ class storyclass {
             div.classList.add("inventory-item");
             $("inventory").appendChild(div);
         }
-
+        
         if (add != "") {            
             storyclass.txt = storyclass.txt.concat(add);
         }
@@ -62,8 +62,8 @@ class storyclass {
             if ($("overlay_txt_active").hidden) {                                   // now is text active - objs are not reactive for clicks
                 $("overlay_txt_active").hidden = false;
 
-                // if starts with '/+', add item to inventory
-                var itemPos = storyclass.txt[0].indexOf("/+");
+                
+                var itemPos = storyclass.txt[0].indexOf("/+");                      // if starts with '/+', add item to inventory
                 if ( itemPos >= 0 ) {
                     var item = storyclass.txt[0].slice(itemPos + 2);               // extract item from txt, all after /+
                     storyclass.txt[0] = storyclass.txt[0].slice(0, itemPos);
