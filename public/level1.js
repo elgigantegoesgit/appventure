@@ -87,25 +87,35 @@ const level = {
             case 'tree2':
 
                 if (isMarked("btn_view")) {
-                    if (!this.levelData.includes("treeViewedOnce")) {
-                        this.levelData.push("treeViewedOnce");
-                        arr.push("Der zweite Baum in erreichbarer Nähe... da könnte ich auch hinüber robben, wenn auch unter noch mehr Schmerzen...");
-                        arr.push("...jedoch nicht einfach so zum Spass. Erst sollte ich mir den Baum noch genauer ansehen...");
-                    } else {
-                        if (!this.levelData.includes("treeViewedTwice")) {
-                            this.levelData.push("treeViewedTwice");
-                            arr.push("Okay, ja da steht ein weiterer Baum<br>...schon recht gut. Aber der müsste noch genauer inspiziert werden...");
+                    if (this.levelData.includes("hasTwig"))
+                        arr.push("Ja genau, jetzt haben wirs geschnallt. Das ist der Baum, in dessen Loch wir uns den Ast zurechtgebrochen haben.");
+                    else {
+                        if (!this.levelData.includes("treeViewedOnce")) {
+                            this.levelData.push("treeViewedOnce");
+                            arr.push("Der zweite Baum in erreichbarer Nähe... da könnte ich auch hinüber robben, wenn auch unter noch mehr Schmerzen...");
+                            arr.push("...jedoch nicht einfach so zum Spass. Erst sollte ich mir den Baum noch genauer ansehen...");
                         } else {
-                            arr.push("Aha, jetzt seh ichs, der hat ein robustes Loch mit soliden Rändern...");
-                            arr.push("Wofür das wohl nützlich sein könnte...");
+                            if (!this.levelData.includes("treeViewedTwice")) {
+                                this.levelData.push("treeViewedTwice");
+                                arr.push("Okay, ja da steht ein weiterer Baum<br>...schon recht gut. Aber der müsste noch genauer inspiziert werden...");
+                            } else {
+                                arr.push("Aha, jetzt seh ichs, der hat ein robustes Loch mit soliden Rändern...");
+                                arr.push("Wofür das wohl nützlich sein könnte...");
+                            }
                         }
                     }
                 }
 
-                if (this.levelData.includes("useTwig")) {
+                if ( !this.levelData.includes("hasTwig") ) {
+                    if (this.levelData.includes("useTwig")) {
                         arr.push("RATSCH! Oh ja, das hat geklappt!/*crack");
+                        arr.push("Jetzt kann ich diesen Ast da als Krücke verwenden.");
                         $('Grosser Ast').innerHTML = 'Handlicher Ast';
                         this.levelData.splice(this.levelData.indexOf("useTwig"), 1);        // remove "useTwig"
+                        this.levelData.push("hasTwig");
+                    }
+                } else {
+                    arr.push("Ja, das war eine gute Idee. Aber wenn ich den Ast nochmal abbreche, ist er als Krücke zu kurz.");
                 }
 
                 break;
@@ -129,13 +139,30 @@ const level = {
                 if (isMarked("btn_take") || isMarked("btn_use")) {
                     arr.push("So leicht gehts nicht. Mein Bein tut zu sehr weh, so komm ich nicht bis zum Wasser. Ich bräuchte eine Krücke oder sowas.");
                 }
+
+                if ( !this.levelData.includes("hasDrunken") ) {
+                    if (this.levelData.includes("useTwig")) {
+                        arr.push("Okay, dann humple ich mit der Krücke zum Wasser.");
+                        arr.push("Ohhh... das tut gut!/*drink");
+                        this.levelData.splice(this.levelData.indexOf("useTwig"), 1);        // remove "useTwig"
+                        this.levelData.push("hasDrunken");
+                    }
+                } else {
+                    arr.push("Ja ich weiss, 4 Liter am Tag und so. Trotzdem danke, ich hab keinen Durst mehr.");
+                }
+
                 break;
 
 
             case 'way':
                 if (isMarked("btn_view")) {
-                    arr.push("Ein Pfad... führt erst zum Wasser und dann ins schier Endlose. So kommt's mir zumindest mit meinem schmerzenden Bein derzeit vor...");
-                    arr.push("Und so in dem Zustand ist garnicht daran zu denken. Ohne Hilfsmittel wird das nichts.")
+                    if (!this.levelData.includes("hasTwig")) {
+                        arr.push("Ein Pfad... führt erst zum Wasser und dann ins schier Endlose. So kommt's mir zumindest mit meinem schmerzenden Bein derzeit vor...");
+                        arr.push("Und so in dem Zustand ist garnicht daran zu denken. Ohne Hilfsmittel wird das nichts.")
+                    } else {
+                        arr.push("Jetzt mit dem Ast als Krücke könnte ich es bis zum Wasser wagen...");
+                    }
+
                 }
                 break;
 
