@@ -1,7 +1,7 @@
 // to make ES6 Modules work (import/export), the page has to be served by a HTTP server (file:// is not working), e.g. npx (needes nodes.js installed):
 // npx http-server -o    ...hostet /public folder
 
-import { $, log } from "./utils.js";
+import { $, log, link } from "./utils.js";
 import { storyclass, objclass } from "./story.js";
 import { levelAddObjects } from "./level1.js";
 
@@ -16,10 +16,10 @@ function levelAddCSS() {
     if (!document.getElementById(cssId)) {
         var head = document.head;
         //var head = document.getElementsByTagName('head')[0];
-        var link = document.createElement('link');
         link.id = cssId;
         link.rel = 'stylesheet';
         link.type = 'text/css';
+        link.href = 'level2.css';
         link.href = 'level1.css';
         link.media = 'all';
         head.appendChild(link);

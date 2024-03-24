@@ -1,5 +1,5 @@
 
-import { $, log } from "./utils.js";
+import { $, log, link } from "./utils.js";
 
 // add Objects to the virtual world, replaces:
 // <my-obj id="way" class="obj obj-way"></my-obj>
@@ -178,7 +178,7 @@ const level = {
 
             case 'btn_dev':
                 log("this.levelData arr content: >>" + this.levelData + "<<");
-
+                link.href = 'level2.css';
                 break;
 
 

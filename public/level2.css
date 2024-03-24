@@ -1,0 +1,35 @@
+
+.obj-tree {
+    position: absolute;
+    top: 5%;
+    left: 2%;
+    width: 36%;
+    height: 80%;
+    border-style: dashed;
+}
+
+.obj-tree2 {
+    position: absolute;
+    top: 8%;
+    right: 1%;
+    width: 17%;
+    height: 70%;
+}
+
+.obj-way {
+    position: absolute;
+    top: 65%;
+    left: 45%;
+    width: 15%;
+    height: 22%;
+    font-size: 16vh;
+}
+
+.obj-river {
+    position: absolute;
+    top: 63%;
+    left: 40%;
+    width: 3%;
+    height: 42%;
+    transform: rotate(-70deg);
+}
