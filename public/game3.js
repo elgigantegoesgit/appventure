@@ -7,11 +7,11 @@ import { levelAddObjects } from "./level1.js";
 
 customElements.define('my-obj', objclass);                    // from here on, <my-obj> can be used in html and js to add new objects to the game in a global scope
 
-let story = new storyclass("txt");                              // passes the div id via constructor, to which text shall be rendered
+let story = new storyclass("txt");                            // passes the div id via constructor, to which text shall be rendered
 
 
 
-function cssLink() {
+function levelAddCSS() {
     var cssId = 'level1';  // you could encode the css path itself to generate id..
     if (!document.getElementById(cssId)) {
         var head = document.head;
@@ -42,7 +42,7 @@ function game_start() {
 window.addEventListener('load', function () {
 
 
-    cssLink();
+    levelAddCSS();
     levelAddObjects();
 
     // remove css:

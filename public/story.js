@@ -21,10 +21,21 @@ class storyclass {
     static tmp = "a";                           // can be accessed from static and obj methods by storyclass.tmp
     static txt_id = "";                         // HTML el id passed by caller stored to 'txt_id'
     static txt = [];                            // array that buffers the text blocks, the user clicks through
-    static audio = null;                          // audio effect. mp3 filename without .mp3 can be set at the end of each text line with prefix '/*', e.g. this plays yawn.mp3: mytext is mytext/*yawn
 
     constructor(id_) {                          // the id of the div, where the text shall be rendered to, is passed to constructor
         storyclass.txt_id = id_;
+    }
+
+    start() {
+        storyclass.nxt("Ohhh./*woosh");
+        storyclass.nxt("Ahhh. Aua<br>aua.");
+        storyclass.nxt("Was, wo bin ich hier gelandet? Was ist passiert?");
+        /*
+        storyclass.nxt("Ich erinnere mich nicht... und mein Kopf dröhnt.xx");
+        storyclass.nxt("Im Mund ein Geschmack wie Oma unterm Arm. Was ist nur passiert?");
+        storyclass.nxt("Was war nur los... grübel grübel...");
+        storyclass.nxt("Ich muss was trinken. Wie lange liege ich hier wohl schon?");        */
+        storyclass.nxt("Au, mein Bein, das zieht! Erstmal umschauen.../*ting");
     }
 
 
@@ -33,15 +44,15 @@ class storyclass {
         $(storyclass.txt_id).innerHTML = "";
         if (storyclass.txt.length > 0) storyclass.nxt("");       // if still text in queue, show next part...
     }
-    
-    
+
+
     /* text - show & flow function
     in:     add    text to add (single string or array, works both)- if nothing is passed, show next array element
     out:    displays first element of storyclass.txt[] to txt_id.innerHTML and removes it if it fits in one screen, or truncates it after last full word (no break in the middle of a word)
     modifies text-queue array storyclass.txt[]*/
     static nxt(add) {
-    
-        if ( add == undefined ) add = "";
+
+        if (add == undefined) add = "";
 
         function inventory_add(item) {                                              // if starts with '/+', add item to inventory
             var div = document.createElement("my-obj");
@@ -51,8 +62,16 @@ class storyclass {
             div.classList.add("inventory-item");
             $("inventory").appendChild(div);
         }
-        
-        if (add != "") {            
+
+        function inventory_has(item) {                                              // if starts with '/+', add item to inventory
+            return $("inventory").querySelector( item ) != null;
+        }
+
+        function inventory_remove(item) {                                              // if starts with '/+', add item to inventory
+            $("inventory").removeChild($(item));
+        }
+
+        if (add != "") {                                                            // add passed string
             storyclass.txt = storyclass.txt.concat(add);
         }
 
@@ -62,28 +81,33 @@ class storyclass {
             if ($("overlay_txt_active").hidden) {                                   // now is text active - objs are not reactive for clicks
                 $("overlay_txt_active").hidden = false;
 
-                
-                var itemPos = storyclass.txt[0].indexOf("/+");                      // if starts with '/+', add item to inventory
-                if ( itemPos >= 0 ) {
+                // *****                    check inventory add or remove           ****
+                var itemPos = storyclass.txt[0].indexOf("/+");                      // ADD - if starts with '/+', add item to inventory
+                if (itemPos >= 0) {
                     var item = storyclass.txt[0].slice(itemPos + 2);               // extract item from txt, all after /+
                     storyclass.txt[0] = storyclass.txt[0].slice(0, itemPos);
-                    
                     inventory_add(item);
+                }
+
+                var itemPos = storyclass.txt[0].indexOf("/-");                      // REMOVE - if starts with '/+', remove item to inventory
+                if (itemPos >= 0) {
+                    var item = storyclass.txt[0].slice(itemPos + 2);               // extract item from txt, all after /+
+                    storyclass.txt[0] = storyclass.txt[0].slice(0, itemPos);
+                    inventory_remove(item);
+                }
 
 
-                }   
-
-
+                // *****                    check Audio           ****
                 // if audio: check for special char "/*filename" in text, add .mp3 and play the audio, crop text to /*
                 var audioPos = storyclass.txt[0].indexOf("/*");
-                if ( audioPos >= 0 ) {
+                if (audioPos >= 0) {
                     var file = storyclass.txt[0].slice(audioPos + 2);               // extract filename from txt, all after /*
                     storyclass.txt[0] = storyclass.txt[0].slice(0, audioPos);
-                    
+
                     if (this.audio) this.audio.pause();                             // stop current running effect if exists
                     this.audio = new Audio('res/' + file + '.mp3');
                     this.audio.play();
-                }   
+                }
 
 
                 if (storyclass.txt[0].length <= TXT_MAX_LEN)
@@ -98,26 +122,14 @@ class storyclass {
                         storyclass.txt[0] = storyclass.txt[0].slice(txt_.length);   // truncate first element after last entire word
                     }
                 }
-                
+
                 /*const el = this;
                 var newone = elm.cloneNode(true);
                 elm.parentNode.replaceChild(newone, elm);
                 */
                 $(storyclass.txt_id).innerHTML = txt_;                              // write to div with id txt_id
-          }
+            }
         }
-    }
-
-    start() {
-        storyclass.nxt("Ohhh./*woosh");
-        storyclass.nxt("Ahhh. Aua<br>aua.");
-        storyclass.nxt("Was, wo bin ich hier gelandet? Was ist passiert?");
-        /*
-        storyclass.nxt("Ich erinnere mich nicht... und mein Kopf dröhnt.xx");
-        storyclass.nxt("Im Mund ein Geschmack wie Oma unterm Arm. Was ist nur passiert?");
-        storyclass.nxt("Was war nur los... grübel grübel...");
-        storyclass.nxt("Ich muss was trinken. Wie lange liege ich hier wohl schon?");        */
-        storyclass.nxt("Au, mein Bein, das zieht! Erstmal umschauen.../*ting");
     }
 
     static obj_clicked(obj_) {                          // called by onclick event from each object with its id as param
@@ -139,16 +151,17 @@ class storyclass {
             }
         }
 
-        log(obj_);
+        log("obj clicked: " + obj_);
         switch (obj_) {
             case 'btn_view':                                                                                //menu buttons clicked
             case 'btn_take':
             case 'btn_use':
+            //case 'btn_dev':
                 toggle_btn(obj_);
                 break;
 
             default:                                                                                        //any other object clicked
-                storyclass.nxt(level.getNextText(obj_));
+                storyclass.nxt(level.getNextText(obj_));                                                    // go on with story passing the clicked object
                 toggle_btn(obj_);                                                                           //reset menu button. This needs to be done AFTER level.getNextText (as there the menu btn state is checked)
                 break;
         }
