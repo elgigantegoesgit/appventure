@@ -1,40 +1,6 @@
 
 import { $, log, link } from "./utils.js";
 
-// add Objects to the virtual world, replaces:
-// <my-obj id="way" class="obj obj-way"></my-obj>
-function levelAddObjects() {
-    var newObj;
-
-    /* left tree
-    */
-    newObj = document.createElement('my-obj');
-    newObj.id = "tree";
-    newObj.className = "obj obj-tree";
-    document.body.appendChild(newObj);
-
-    // right tree
-    newObj = document.createElement('my-obj');
-    newObj.id = "tree2";
-    newObj.className = "obj obj-tree2";
-    document.body.appendChild(newObj);
-
-    // way
-    newObj = document.createElement('my-obj');
-    newObj.id = "way";
-    newObj.className = "obj obj-way";
-    document.body.appendChild(newObj);
-
-    // river
-    newObj = document.createElement('my-obj');
-    newObj.id = "river";
-    newObj.className = "obj obj-river";
-    document.body.appendChild(newObj);
-
-
-}
-
-
 // helper to check if one of the menu buttons is activated (take view use)
 function isMarked(btn_) {
     return ($(btn_).classList.contains("menu-high"));
@@ -42,10 +8,76 @@ function isMarked(btn_) {
 
 
 // level object containing the story
-const level = {
+const level1 = {
     levelName: "Level 1: Das Erwachen im Wald",
     levelData: [],
 
+    // add Objects to the virtual world, replaces:
+    // <my-obj id="way" class="obj obj-way"></my-obj>
+    addObjects: function () {
+        log("ADD OBJ1");
+        
+        var newObj;
+        
+        /* background - muss direkt am Anfang von body (d.h. direkt VOR 'menu_container') eingefügt werden, sonst ist er unsichtbar (komischerweise) / objekte sind aber klickbar wenn sie unten dran gehängt werden...!?
+        */
+        newObj = document.createElement('my-obj');
+        newObj.id = "bg";
+        
+        var img = document.createElement('img');
+        img.src = 'res/bg.jpg';
+        newObj.appendChild(img);
+
+        document.body.insertBefore(newObj, $('menu_container'));
+
+        /* left tree
+        */
+        newObj = document.createElement('my-obj');
+        newObj.id = "tree";
+        newObj.className = "obj obj-tree";
+        document.body.appendChild(newObj);
+
+        // right tree
+        newObj = document.createElement('my-obj');
+        newObj.id = "tree2";
+        newObj.className = "obj obj-tree2";
+        document.body.appendChild(newObj);
+
+        // way
+        newObj = document.createElement('my-obj');
+        newObj.id = "way";
+        newObj.className = "obj obj-way";
+        document.body.appendChild(newObj);
+
+        // river
+        newObj = document.createElement('my-obj');
+        newObj.id = "river";
+        newObj.className = "obj obj-river";
+        document.body.appendChild(newObj);
+    },
+
+    removeObjects: function () {
+        /* remove background    */
+        var element = $("bg");
+        element.parentNode.removeChild(element);
+
+        /* left tree    */
+        var element = $("tree");
+        element.parentNode.removeChild(element);
+
+        /* right tree */
+        var element = $("tree2");
+        element.parentNode.removeChild(element);
+
+        // way
+        var element = $("way");
+        element.parentNode.removeChild(element);
+
+        // river
+        var element = $("river");
+        element.parentNode.removeChild(element);
+
+    },
 
     getNextText: function (obj_) {
         log("*** lvl.data: " + this.levelData);
@@ -73,7 +105,7 @@ const level = {
             }
         }
 
-        
+
 
         switch (obj_) {
 
@@ -137,19 +169,19 @@ const level = {
                 if (lvlGet("cmdUseTwig")) {
                     lvlClr("cmdUseTwig");
                     $('Grosser Ast').innerHTML = "Grosser Ast";
-                    if ( lvlGet("treeViewedTwice") ) {
+                    if (lvlGet("treeViewedTwice")) {
                         arr.push("RATSCH! Oh ja, das hat geklappt!/*crack");
                         arr.push("Perfekt./-Grosser Ast");
                         arr.push("Jetzt kann ich diesen Ast da als Krücke verwenden./+Krücke");
                     } else {
-                        arr.push("Möglich dass sich da was machen lässt, aber zuerst müsste ich mir den Baum genau  -  wirklich genau  - ansehen.");                        
+                        arr.push("Möglich dass sich da was machen lässt, aber zuerst müsste ich mir den Baum genau  -  wirklich genau  - ansehen.");
                     }
-                } 
+                }
 
                 if (lvlGet("cmdUseCrutch")) {
                     lvlClr("cmdUseCrutch");
                     $('Krücke').innerHTML = "Krücke";       //reset "Verwende Krücke mit..."
-                    arr.push("Keine gute Idee. Die Länge passt jetzt so wie sie ist.");                        
+                    arr.push("Keine gute Idee. Die Länge passt jetzt so wie sie ist.");
                 }
 
                 break;
@@ -176,12 +208,6 @@ const level = {
                 break;
 
 
-            case 'btn_dev':
-                log("this.levelData arr content: >>" + this.levelData + "<<");
-                link.href = 'level2.css';
-                break;
-
-
 
 
             case 'river':
@@ -201,7 +227,6 @@ const level = {
                     }
                 }
                 break;
-
 
             case 'way':
                 if (isMarked("btn_view")) {
@@ -239,9 +264,22 @@ const level = {
                 }
                 break;
 
+            case 'btn_dev':
+                log("this.levelData arr content: >>" + this.levelData + "<<");
+                link.href = 'level2.css';
+                this.removeObjects();
+                arr.push("Oh, hier bei einem uralten, steinernen Tor bin ich also.../L2");
+                log("-------------------dev lvl1");
+                break;
+
+            default:
+                log("DEFAULT geklickt");
+                break;
         }
+
         return arr;
-    }
+    } // end level.getNextText(obj)    
 };
-export { level, levelAddObjects };
+//export { level1, level1AddObjects, level1RemoveObjects };
+export { level1 };
 

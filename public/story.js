@@ -1,5 +1,6 @@
 import { $, log } from "./utils.js";
-import { level } from "./level1.js";
+import { level1 } from "./level1.js";
+import { level2 } from "./level2.js";
 let TXT_MAX_LEN = 170;
 
 
@@ -18,6 +19,7 @@ class objclass extends HTMLElement {             //custom element - each object 
 */
 class storyclass {
 
+    static level_current = 1;
     static tmp = "a";                           // can be accessed from static and obj methods by storyclass.tmp
     static txt_id = "";                         // HTML el id passed by caller stored to 'txt_id'
     static txt = [];                            // array that buffers the text blocks, the user clicks through
@@ -64,12 +66,23 @@ class storyclass {
         }
 
         function inventory_has(item) {                                              // if starts with '/+', add item to inventory
-            return $("inventory").querySelector( item ) != null;
+            return $("inventory").querySelector(item) != null;
         }
 
         function inventory_remove(item) {                                              // if starts with '/+', add item to inventory
             $("inventory").removeChild($(item));
         }
+
+        function level_switch(lvl) {                                              // by '/L<nr>' switch to level nr
+            storyclass.level_current = lvl;
+            log("LEVEL: " + lvl);
+            if (storyclass.level_current == '1') level1.addObjects();
+            if (storyclass.level_current == '2') level2.addObjects();
+
+        }
+
+
+
 
         if (add != "") {                                                            // add passed string
             storyclass.txt = storyclass.txt.concat(add);
@@ -77,9 +90,17 @@ class storyclass {
 
         if (storyclass.txt.length > 0) {
 
-
             if ($("overlay_txt_active").hidden) {                                   // now is text active - objs are not reactive for clicks
                 $("overlay_txt_active").hidden = false;
+
+                // *****                    check for level-switch request           ****
+                var itemPos = storyclass.txt[0].indexOf("/L");                      // Switch to passed level nr  '/L<nr>'
+                if (itemPos >= 0) {
+                    log("xxxxxx: " + storyclass.txt[0]);
+                    var lvl = storyclass.txt[0].slice(itemPos + 2);               // extract item from txt, all after /+
+                    storyclass.txt[0] = storyclass.txt[0].slice(0, itemPos);
+                    level_switch(lvl);
+                }
 
                 // *****                    check inventory add or remove           ****
                 var itemPos = storyclass.txt[0].indexOf("/+");                      // ADD - if starts with '/+', add item to inventory
@@ -156,17 +177,23 @@ class storyclass {
             case 'btn_view':                                                                                //menu buttons clicked
             case 'btn_take':
             case 'btn_use':
-            //case 'btn_dev':
                 toggle_btn(obj_);
                 break;
 
-            default:                                                                                        //any other object clicked
-                storyclass.nxt(level.getNextText(obj_));                                                    // go on with story passing the clicked object
-                toggle_btn(obj_);                                                                           //reset menu button. This needs to be done AFTER level.getNextText (as there the menu btn state is checked)
+            default:
+                {
+                    log(">>>"+this.level_current);
+                    
+                    if (this.level_current == '1')          storyclass.nxt(level1.getNextText(obj_));                                                    // go on with story passing the clicked object
+                    else if (this.level_current == '2')     storyclass.nxt(level2.getNextText(obj_));                                                    // go on with story passing the clicked object
+
+                    toggle_btn(obj_);                                                                           //reset menu button. This needs to be done AFTER level.getNextText (as there the menu btn state is checked)
+                }
                 break;
-        }
+        }                                                                                 //any other object clicked
     }
 }
+
 
 export { storyclass, objclass };
 

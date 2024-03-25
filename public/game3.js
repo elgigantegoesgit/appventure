@@ -3,7 +3,7 @@
 
 import { $, log, link } from "./utils.js";
 import { storyclass, objclass } from "./story.js";
-import { levelAddObjects } from "./level1.js";
+import { level1 } from "./level1.js";
 
 customElements.define('my-obj', objclass);                    // from here on, <my-obj> can be used in html and js to add new objects to the game in a global scope
 
@@ -43,7 +43,7 @@ window.addEventListener('load', function () {
 
 
     levelAddCSS();
-    levelAddObjects();
+    level1.addObjects();
 
     // remove css:
     //var linkNode = document.querySelector('link[href*="level1.css"]');
