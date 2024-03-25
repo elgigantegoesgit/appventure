@@ -257,7 +257,9 @@ const level1 = {
                                 arr.push("Kann schon sein, dass ichs noch weiter schaffe, aber eines der Grundbedürfnisse muss erst gestillt werden.");
                             } else {
                                 arr.push("Ohoho und schon wieder zieht's. Aber es geht... Nur weg hier!/*moan");
-                                //lvlSet("reachedTree3");
+                                link.href = 'level2.css';
+                                this.removeObjects();
+                                arr.push("Oh, hier bei einem uralten, steinernen Tor bin ich also.../L2");
                             }
                         }
                     }
@@ -269,7 +271,7 @@ const level1 = {
                 link.href = 'level2.css';
                 this.removeObjects();
                 arr.push("Oh, hier bei einem uralten, steinernen Tor bin ich also.../L2");
-                log("-------------------dev lvl1");
+                log("-------------------dev lvl1 jumps to lvl2");
                 break;
 
             default:
