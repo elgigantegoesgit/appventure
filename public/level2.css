@@ -1,11 +1,23 @@
 
+.obj-fruits {
+    position: absolute;
+    top: 36%;
+    left: 15%;
+    width: 6%;
+    height: 10%;
+    /*border-style: solid;*/
+    background-image: url("res/fruits.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 .obj-bell1 {
     position: absolute;
     top: 65%;
     left: 40%;
     width: 6%;
     height: 9%;
-    border-style: double;
+    border-style: none;
 }
 
 .obj-bell2 {
@@ -14,7 +26,7 @@
     left: 50%;
     width: 4%;
     height: 9%;
-    border-style: dashed;
+    border-style: none;
 }
 
 .obj-bell3 {
@@ -23,5 +35,5 @@
     left: 55%;
     width: 4%;
     height: 9%;
-    border-style: solid;
+    border-style: none;
 }

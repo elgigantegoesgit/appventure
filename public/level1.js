@@ -30,6 +30,10 @@ const level1 = {
 
         document.body.insertBefore(newObj, $('menu_container'));
 
+        /* First Level has NO back button and starts without fwd button       */
+        $('btn_back').style = "visibility: hidden;";
+        $('btn_fwd').style = "visibility: hidden;";
+
         /* left tree
         */
         newObj = document.createElement('my-obj');
@@ -42,6 +46,28 @@ const level1 = {
         newObj.id = "tree2";
         newObj.className = "obj obj-tree2";
         document.body.appendChild(newObj);
+
+        
+        /* middle tree in the back
+        */
+        newObj = document.createElement('my-obj');
+        newObj.id = "tree3";
+        newObj.className = "obj obj-tree3";
+        document.body.appendChild(newObj);
+
+                
+        /* bird-yes        */
+        newObj = document.createElement('my-obj');
+        newObj.id = "bird-yes";
+        newObj.className = "obj obj-bird-yes";
+        document.body.appendChild(newObj);     
+
+        /* bird-no        */
+        newObj = document.createElement('my-obj');
+        newObj.id = "bird-no";
+        newObj.className = "obj obj-bird-no";
+        document.body.appendChild(newObj);
+
 
         // way
         newObj = document.createElement('my-obj');
@@ -98,7 +124,7 @@ const level1 = {
         }
 
         if (lvlGet("cmdUseCrutch")) {                                   // "Verwende Krücke mit..." und dann nicht auf tree2 od river geklickt ->raus
-            if ((obj_ != "tree2") && (obj_ != "way")) {
+            if ((obj_ != "tree2") && (obj_ != "tree3") && (obj_ != "way")) {                 // VORSICHT, schiacha HACK! Objekt reagiert nicht auf "Verwende mit" wenns hier nicht drin ist
                 lvlClr("cmdUseCrutch");
                 $('Krücke').innerHTML = 'Krücke';
                 return;
@@ -186,6 +212,54 @@ const level1 = {
 
                 break;
 
+
+            case 'tree3':
+                
+                if (isMarked("btn_view")) {
+                    //if ($("Krücke"))
+                        arr.push("Oha, der ist ja hohl.");         
+                }
+                if (!$("Krücke")) {
+                    arr.push("Ein Pfad... führt erst zum Wasser und dann ins schier Endlose. So kommt's mir zumindest mit meinem schmerzenden Bein derzeit vor...");
+                    arr.push("Und so in dem Zustand ist garnicht daran zu denken. Ohne Hilfsmittel wird das nichts.")
+                } else {
+
+                    if (lvlGet("cmdUseFruits")) {
+                        lvlClr("cmdUseFruits");
+                        $('Früchte').innerHTML = "Früchte";
+                        arr.push("So. Hier kleiner Freund - dann werfe ich dir die Früchte rein.../*eat");
+                        arr.push("Oh, scheint ihm zu schmecken.");
+                        lvlSet("ateFruits");
+
+                    }
+                    
+                    if (lvlGet("cmdUseCrutch")) {
+                        lvlClr("cmdUseCrutch");
+                        $('Krücke').innerHTML = "Krücke";       //reset "Verwende Krücke mit..."
+                        arr.push("Nagut, ich fahr mal rein ins Loch.../*crack2");
+                        if (!lvlGet("ateFruits")) {
+                            arr.push("...hm. Das gefällt dem Vogel nicht. Er sieht hungrig aus.../*no2");
+                            
+                            $('bird-no').style = "visibility: visible;"
+                            function birdnClr()
+                            {
+                                $('bird-no').style = "visibility: hidden;";
+                            }
+                            setTimeout(birdnClr, 5000);
+                        } else {                            
+                            arr.push("Ah das Futter hat ihn freundlich gestimmt. Welch wundervolle Melodei er tudelt.../*melody");
+                            $('bird-yes').style = "visibility: visible;"
+                            function birdyClr()
+                            {
+                                $('bird-yes').style = "visibility: hidden;";
+                            }
+                            setTimeout(birdyClr, 10000);
+                        }
+                    }
+                }
+                    
+                break;
+                
             case 'Grosser Ast':
                 if (isMarked("btn_view")) {
                     arr.push("Oh ja, ein schöner stabiler Ast mit Gabel dran. Nur etwas lang.");
@@ -198,16 +272,26 @@ const level1 = {
 
                 break;
 
-            case 'Krücke':
-                if (isMarked("btn_view")) {
-                    arr.push("Der Ast gibt eine brauchbare Krücke ab.");
-                } else if (isMarked("btn_use")) {
-                    $('Krücke').innerHTML = "Verwende Krücke mit...";
-                    lvlSet("cmdUseCrutch");
-                }
-                break;
+                case 'Krücke':
+                    if (isMarked("btn_view")) {
+                        arr.push("Der Ast gibt eine brauchbare Krücke ab.");
+                    } else if (isMarked("btn_use")) {
+                        $('Krücke').innerHTML = "Verwende Krücke mit...";
+                        lvlSet("cmdUseCrutch");
+                    }
+                    break;
+    
 
-
+                case 'Früchte':
+                    if (isMarked("btn_view")) {
+                        arr.push("Hmmm. Ja, noch sehen sie lecker aus. Noch.");
+                    } else if (isMarked("btn_use")) {
+                        $('Früchte').innerHTML = "Verwende Früchte mit...";
+                        lvlSet("cmdUseFruits");
+                    }
+                    break;
+    
+            
 
 
             case 'river':
@@ -266,7 +350,11 @@ const level1 = {
                 }
                 break;
 
-            case 'btn_dev':
+            case 'btn_dev':          
+            arr.push("Jetzt kann ich diesen Ast da als Krücke verwenden./+Krücke");
+            arr.push("und Hier früchte verwenden./+Früchte");
+                break;
+
                 log("this.levelData arr content: >>" + this.levelData + "<<");
                 link.href = 'level2.css';
                 this.removeObjects();

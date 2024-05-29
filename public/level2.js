@@ -11,11 +11,12 @@ function isMarked(btn_) {
 const level2 = {
     levelName: "Level 2: Das klingende Tor",
     levelData: [],
+    arrTones: [],
 
     // add Objects to the virtual world, replaces:
     // <my-obj id="way" class="obj obj-way"></my-obj>
     addObjects: function () {
-        log("ADD OBJ2");
+        log("ADD objects for level 2...");
 
         var newObj;
 
@@ -29,6 +30,20 @@ const level2 = {
         newObj.appendChild(img);
 
         document.body.insertBefore(newObj, $('menu_container'));
+
+
+        /* back/fwd forward/backward Buttons: First Level has NO back button, from 2nd on they have. By default no fwd button. */
+        $('btn_back').style = "visibility: visible;";
+        $('btn_fwd').style = "visibility: hidden;";
+
+
+        /* fruits
+        */
+        newObj = document.createElement('my-obj');
+        newObj.id = "fruits";
+        newObj.className = "obj obj-fruits";
+        document.body.appendChild(newObj);
+
 
         /* bell1
         */
@@ -58,6 +73,9 @@ const level2 = {
         var element = $("bg");
         element.parentNode.removeChild(element);
 
+        var element = $("fruits");
+        if (element) element.parentNode.removeChild(element);
+
         var element = $("bell1");
         element.parentNode.removeChild(element);
 
@@ -77,25 +95,68 @@ const level2 = {
         const lvlClr = (str) => this.levelData.splice(this.levelData.indexOf(str), 1);
 
         var arr = new Array();          //array with texts to add
-
-
+        
         switch (obj_) {
 
+            case 'fruits':
+                if (isMarked("btn_view")) {
+                    arr.push("Eine Schale mit Früchten.")
+                }
+                if (isMarked("btn_use")) {
+                    arr.push("Danke, gerade keinen Appetit.")
+                }
+                if (isMarked("btn_take")) {
+                    arr.push("Okay, nehm ich mit./+Früchte")
+                    var element = $("fruits");
+                    element.parentNode.removeChild(element);
+                }
+
+                break;
+                
             case 'bell1':
-                arr.push("Ein schwerer, fingerdicker Eisenring in einer liebevoll verzierten, gusseisenen Halterung. Dient wohl dazu, anzuklopfen oder sowas. In welchem Jahrundert dieses Meisterwerk wohl gefertigt wurde...");
-                arr.push("Mal sehen.../*bell1")
+                if (isMarked("btn_view")) {
+                    arr.push("Ein schwerer, fingerdicker Eisenring in einer liebevoll verzierten, gusseisenen Halterung. Dient wohl dazu, anzuklopfen oder sowas. In welchem Jahrundert dieses Meisterwerk wohl gefertigt wurde...");
+                }
+                if (isMarked("btn_use")) {
+                    arr.push("Nadann.../*bell1")
+                    this.arrTones.push('1');
+                }
+                if (isMarked("btn_take")) {
+                    arr.push("Machst du Witze?")
+                }
+
                 break;
 
 
             case 'bell2':
-                arr.push("Mal sehen.../*bell2")
+                if (isMarked("btn_view")) {
+                    arr.push("Ein Meisterwerk von einem Türklopfer, das seinesgleichen sucht.");
+                }
+                if (isMarked("btn_use")) {
+                    arr.push("Okay./*bell2")
+                    this.arrTones.push('2');
+                }
+                if (isMarked("btn_take")) {
+                    arr.push("Das sind EISEN RINGE, kapert?")
+                }
                 break;
 
             case 'bell3':
-                arr.push("Mal sehen.../*bell3")
+                if (isMarked("btn_view")) {
+                    arr.push("Schmiedekunst hat mir schon immer gefallen!");
+                }
+                if (isMarked("btn_use")) {
+                    arr.push("Gern./*bell3")
+                    this.arrTones.push('3');
+                }
+                if (isMarked("btn_take")) {
+                    arr.push("Erstens wäre es Diebstahl, und zweitens geht nehmen hier nicht.");
+                }
+
                 break;
 
             case 'btn_dev':
+            case 'btn_back':                
                 log("---------------- lvl2---");
                 log("this.levelData arr content: >>" + this.levelData + "<<");
                 link.href = 'level1.css';
@@ -107,6 +168,20 @@ const level2 = {
                 log("DEFAULT geklickt");
                 break;
         }
+            
+        // **** shift melody tone memory and check if correct melody was played    
+        if ( this.arrTones.length > 5 ) this.arrTones.shift();
+        
+        if (    (this.arrTones[0] == '1') &&        // ***************** WIN *************
+                (this.arrTones[1] == '3') && 
+                (this.arrTones[2] == '2') && 
+                (this.arrTones[3] == '1') && 
+                (this.arrTones[4] == '1')  )       {    
+                    new Audio('res/win.mp3').play();
+                    $("overlay").innerHTML ="<br>Gratulation<br><br>Soweit hast dus mal durchgespielt ;)<br>Wenn es dir gefallen hat, bitte den lieben Peter dass er weiter bastelt dran!";  
+                    $("overlay").hidden = false;
+                    $("overlay").onclick = "";  
+                }
 
         return arr;
     } // end level.getNextText(obj)    

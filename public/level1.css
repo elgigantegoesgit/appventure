@@ -16,6 +16,40 @@
     height: 70%;
 }
 
+.obj-tree3 {
+    position: absolute;
+    top: 8%;
+    left: 38%;
+    width: 10%;
+    height: 60%;
+    border-style: none;
+}
+
+.obj-bird-yes {
+    position: absolute;
+    top: 32%;
+    left: 38%;
+    width: 5%;
+    height: 10%;
+    border-style: none;
+    background-image: url("res/bird_yes.gif");
+    background-size: contain;
+    background-repeat: no-repeat;
+    visibility: hidden;
+}
+.obj-bird-no {
+    position: absolute;
+    top: 32%;
+    left: 38%;
+    width: 5%;
+    height: 10%;
+    border-style: none;
+    background-image: url("res/bird_no.gif");
+    background-size: contain;
+    background-repeat: no-repeat;
+    visibility: hidden;
+}
+
 .obj-way {
     position: absolute;
     top: 65%;

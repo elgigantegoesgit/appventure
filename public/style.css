@@ -162,6 +162,34 @@ img {
 
 }
 
+/* Level BACK - FWD Butons */
+
+.menu_back {
+    position: absolute;    
+    visibility: visible;
+    bottom: 2%;
+    width: 7%;
+    height: 13%;
+    rotate: 180deg;
+    background-repeat: no-repeat;
+    background-image: url("res/arr.png");
+    background-size:contain;
+    border-style:none;
+}
+.menu_fwd {
+    position: absolute;    
+    visibility: visible;
+    right: 0%;
+    bottom: 2%;
+    width: 7%;
+    height: 13%;
+    rotate: 0deg;
+    background-repeat: no-repeat;
+    background-image: url("res/arr.png");
+    background-size:contain;
+    border-style:none;
+}
+
 .menu_item {
     text-shadow:
         0 0 2px maroon,

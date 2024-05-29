@@ -49,7 +49,14 @@ class storyclass {
 
 
     /* text - show & flow function
-    in:     add    text to add (single string or array, works both)- if nothing is passed, show next array element
+    in:     add     text to add (single string or array, works both)- if nothing is passed, show next array element
+                    If text includes/consits of these special sequences, the following actions are performed. x is placeholder for a string:
+            /Lx     jumps to level nr x
+            /+x     if starts with '/+', add item 'x' to inventory
+            /-x     remove item 'x' from inventory
+            /*x     play soundfile 'x'.mp3
+            /Gx     place gif 'x'.gif
+
     out:    displays first element of storyclass.txt[] to txt_id.innerHTML and removes it if it fits in one screen, or truncates it after last full word (no break in the middle of a word)
     modifies text-queue array storyclass.txt[]*/
     static nxt(add) {
@@ -131,6 +138,7 @@ class storyclass {
                 }
 
 
+                // ******                   split text if necessary              *********
                 if (storyclass.txt[0].length <= TXT_MAX_LEN)
                     var txt_ = storyclass.txt.shift();                              // all fits in one screen, display and shift (remove) first element (shift modifies storyclass.txt[] !)
                 else {
@@ -143,6 +151,8 @@ class storyclass {
                         storyclass.txt[0] = storyclass.txt[0].slice(txt_.length);   // truncate first element after last entire word
                     }
                 }
+
+
 
                 /*const el = this;
                 var newone = elm.cloneNode(true);
