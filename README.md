@@ -1,4 +1,4 @@
-2024-05-29  back/fwd buttons added. levelData from utils.js is used in order to have one global storage
+2024-05-29  v1.0 back/fwd buttons added. levelData from utils.js is used in order to have one global storage
 2024-05-27  bird gif animation and melody check for big gate in lvl2
 2024-03-08  audio: check for special char "/*filename" in text, add .mp3 and play the audio, crop text to /*
 2024-03-06  Appventure 0.1
