@@ -28,8 +28,10 @@ function levelAddCSS() {
 
 function game_start() {
 
-    $("overlay").hidden = true;
+    if ( $("overlay").innerHTML.includes("Gratulation") ) return; // if game was played to the end, do not hide the "Congratulations" - Overlay anymore
 
+    $("overlay").hidden = true;
+    
     var bg_music = new Audio('res/water.mp3');
     bg_music.volume = 0.5;
     // bg_music.play();
@@ -52,7 +54,9 @@ window.addEventListener('load', function () {
     /* overlay: first screen "start game..." to be clicked to start
     */
     $("overlay").hidden = false;
-    $("overlay").addEventListener("click", function () { game_start() });
+    //$("overlay").addEventListener("click", function () { game_start() });
+    
+    $("overlay").addEventListener("click", game_start);
 
     /* overlay_txt_active: invisible overlay box during text displeyed in text field*/
     $("overlay_txt_active").hidden = true;

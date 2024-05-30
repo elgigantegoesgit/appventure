@@ -180,7 +180,7 @@ const level2 = {
                     new Audio('res/win.mp3').play();
                     $("overlay").innerHTML ="<br>Gratulation<br><br>Soweit hast dus mal durchgespielt ;)<br>Wenn es dir gefallen hat, bitte den lieben Peter dass er weiter bastelt dran!";  
                     $("overlay").hidden = false;
-                    $("overlay").onclick = "";  
+
                 }
 
         return arr;

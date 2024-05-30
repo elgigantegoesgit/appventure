@@ -33,7 +33,7 @@ const level1 = {
 
         /* First Level has NO back button and starts without fwd button       */
         $('btn_back').style = "visibility: hidden;";
-        if ( lvlGet('lvl2') )       $('btn_fwd').style = "visibility: visible;";
+        if ( !lvlGet('lvl2') )       $('btn_fwd').style = "visibility: visible;";
         else                        $('btn_fwd').style = "visibility: hidden;";
 
 
