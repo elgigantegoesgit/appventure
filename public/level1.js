@@ -1,5 +1,6 @@
 
-import { $, log, link } from "./utils.js";
+import { $, log, link, levelData, lvlGet, lvlSet, lvlClr } from "./utils.js";
+
 
 // helper to check if one of the menu buttons is activated (take view use)
 function isMarked(btn_) {
@@ -10,7 +11,7 @@ function isMarked(btn_) {
 // level object containing the story
 const level1 = {
     levelName: "Level 1: Das Erwachen im Wald",
-    levelData: [],
+    //levelData: [], // former version. now levelData & methods from utils.js are used in order to have one global storage
 
     // add Objects to the virtual world, replaces:
     // <my-obj id="way" class="obj obj-way"></my-obj>
@@ -32,7 +33,9 @@ const level1 = {
 
         /* First Level has NO back button and starts without fwd button       */
         $('btn_back').style = "visibility: hidden;";
-        $('btn_fwd').style = "visibility: hidden;";
+        if ( lvlGet('lvl2') )       $('btn_fwd').style = "visibility: visible;";
+        else                        $('btn_fwd').style = "visibility: hidden;";
+
 
         /* left tree
         */
@@ -106,11 +109,7 @@ const level1 = {
     },
 
     getNextText: function (obj_) {
-        log("*** lvl.data: " + this.levelData);
-
-        const lvlGet = (str) => this.levelData.includes(str);
-        const lvlSet = (str) => this.levelData.push(str);
-        const lvlClr = (str) => this.levelData.splice(this.levelData.indexOf(str), 1);
+        log("*** lvl.data: " + levelData);
 
         var arr = new Array();          //array with texts to add
 
@@ -350,20 +349,26 @@ const level1 = {
                 }
                 break;
 
-            case 'btn_dev':          
-            arr.push("Jetzt kann ich diesen Ast da als Krücke verwenden./+Krücke");
-            arr.push("und Hier früchte verwenden./+Früchte");
-                break;
-
-                log("this.levelData arr content: >>" + this.levelData + "<<");
+            case 'btn_fwd':          
+                log("------------------- lvl1 jumps to lvl2");
                 link.href = 'level2.css';
                 this.removeObjects();
                 arr.push("Oh, hier bei einem uralten, steinernen Tor bin ich also.../L2");
+                break;
+
+            case 'btn_dev':          
+                arr.push("Jetzt kann ich diesen Ast da als Krücke verwenden./+Krücke");
+                arr.push("und Hier früchte verwenden./+Früchte");
+                break;
+
                 log("-------------------dev lvl1 jumps to lvl2");
+                link.href = 'level2.css';
+                this.removeObjects();
+                arr.push("Oh, hier bei einem uralten, steinernen Tor bin ich also.../L2");
                 break;
 
             default:
-                log("DEFAULT geklickt");
+                log("DEFAULT geklickt - obj: " + obj_);
                 break;
         }
 

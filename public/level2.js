@@ -1,5 +1,5 @@
 
-import { $, log, link } from "./utils.js";
+import { $, log, link, levelData, lvlSet, lvlGet, lvlClr } from "./utils.js";
 
 // helper to check if one of the menu buttons is activated (take view use)
 function isMarked(btn_) {
@@ -10,14 +10,14 @@ function isMarked(btn_) {
 // level object containing the story
 const level2 = {
     levelName: "Level 2: Das klingende Tor",
-    levelData: [],
     arrTones: [],
 
     // add Objects to the virtual world, replaces:
     // <my-obj id="way" class="obj obj-way"></my-obj>
     addObjects: function () {
         log("ADD objects for level 2...");
-
+        if ( ! lvlGet('lvl2')) lvlSet('lvl2');  // remember, we have reached lvl2 (for back/fwd Buttons in other levels)
+        
         var newObj;
 
         /* background - muss direkt am Anfang von body (d.h. direkt VOR 'menu_container') eingefügt werden, sonst ist er unsichtbar (komischerweise) / objekte sind aber klickbar wenn sie unten dran gehängt werden...!?
@@ -88,11 +88,11 @@ const level2 = {
     },
 
     getNextText: function (obj_) {
-        log("*** lvl.data: " + this.levelData);
+        log("*** lvl.data: " + levelData);
 
-        const lvlGet = (str) => this.levelData.includes(str);
-        const lvlSet = (str) => this.levelData.push(str);
-        const lvlClr = (str) => this.levelData.splice(this.levelData.indexOf(str), 1);
+        const lvlGet = (str) => levelData.includes(str);
+        const lvlSet = (str) => levelData.push(str);
+        const lvlClr = (str) => levelData.splice(levelData.indexOf(str), 1);
 
         var arr = new Array();          //array with texts to add
         
@@ -158,14 +158,14 @@ const level2 = {
             case 'btn_dev':
             case 'btn_back':                
                 log("---------------- lvl2---");
-                log("this.levelData arr content: >>" + this.levelData + "<<");
+                log("this.levelData arr content: >>" + levelData + "<<");
                 link.href = 'level1.css';
                 this.removeObjects();
                 arr.push("Und wieder hier.../L1");
                 break;
 
             default:
-                log("DEFAULT geklickt");
+                log("DEFAULT geklickt - obj: " + obj_);
                 break;
         }
             

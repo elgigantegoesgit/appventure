@@ -167,26 +167,26 @@ img {
 .menu_back {
     position: absolute;    
     visibility: visible;
-    bottom: 2%;
-    width: 7%;
-    height: 13%;
+    bottom: 3%;
+    width: 5%;
+    height: 8%;
     rotate: 180deg;
     background-repeat: no-repeat;
     background-image: url("res/arr.png");
-    background-size:contain;
+    background-size:cover;
     border-style:none;
 }
 .menu_fwd {
     position: absolute;    
     visibility: visible;
     right: 0%;
-    bottom: 2%;
-    width: 7%;
-    height: 13%;
+    bottom: 3%;
+    width: 5%;
+    height: 8%;
     rotate: 0deg;
     background-repeat: no-repeat;
     background-image: url("res/arr.png");
-    background-size:contain;
+    background-size:cover;
     border-style:none;
 }
 
