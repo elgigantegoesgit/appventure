@@ -170,13 +170,14 @@ const level2 = {
         }
             
         // **** shift melody tone memory and check if correct melody was played    
-        if ( this.arrTones.length > 5 ) this.arrTones.shift();
+        if ( this.arrTones.length > 6 ) this.arrTones.shift();
         
-        if (    (this.arrTones[0] == '1') &&        // ***************** WIN *************
-                (this.arrTones[1] == '3') && 
-                (this.arrTones[2] == '2') && 
-                (this.arrTones[3] == '1') && 
-                (this.arrTones[4] == '1')  )       {    
+        if (    (this.arrTones[0] == '3') &&        // ***************** WIN *************
+                (this.arrTones[1] == '2') && 
+                (this.arrTones[2] == '1') && 
+                (this.arrTones[3] == '2') && 
+                (this.arrTones[4] == '1') && 
+                (this.arrTones[5] == '1')  )       {    
                     new Audio('res/win.mp3').play();
                     $("overlay").innerHTML ="<br>Gratulation<br><br>Soweit hast dus mal durchgespielt ;)<br>Wenn es dir gefallen hat, bitte den lieben Peter dass er weiter bastelt dran!";  
                     $("overlay").hidden = false;

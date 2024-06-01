@@ -227,7 +227,7 @@ const level1 = {
                         lvlClr("cmdUseFruits");
                         $('Früchte').innerHTML = "Früchte";
                         arr.push("So. Hier kleiner Freund - dann werfe ich dir die Früchte rein.../*eat");
-                        arr.push("Oh, scheint ihm zu schmecken.");
+                        arr.push("Oh, scheint ihm zu schmecken./-Früchte");
                         lvlSet("ateFruits");
 
                     }
@@ -359,6 +359,7 @@ const level1 = {
             case 'btn_dev':          
                 arr.push("Jetzt kann ich diesen Ast da als Krücke verwenden./+Krücke");
                 arr.push("und Hier früchte verwenden./+Früchte");
+                $('btn_fwd').style = "visibility: visible;";
                 break;
 
                 log("-------------------dev lvl1 jumps to lvl2");

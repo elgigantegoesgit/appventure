@@ -168,9 +168,11 @@ img {
     position: absolute;    
     visibility: visible;
     bottom: 3%;
-    width: 5%;
+    left: 1%;
+    width: 6%;
     height: 8%;
     rotate: 180deg;
+    transform-origin: center;
     background-repeat: no-repeat;
     background-image: url("res/arr.png");
     background-size:cover;
@@ -179,9 +181,9 @@ img {
 .menu_fwd {
     position: absolute;    
     visibility: visible;
-    right: 0%;
+    right: 5%;
     bottom: 3%;
-    width: 5%;
+    width: 6%;
     height: 8%;
     rotate: 0deg;
     background-repeat: no-repeat;
